@@ -84,8 +84,50 @@ function LogInMode() {
   // Ajout du lien Modification
   const TitlePortfolio = document.querySelector(".TitlePortfolio");
   const TitleEdit = document.createElement("a");
-  TitleEdit.classList.add("editLink");
+  TitleEdit.classList.add("TitleEdit");
   TitleEdit.href = "#";
   TitleEdit.innerHTML = ` <i class="fa-regular fa-pen-to-square"></i> <p> modifier <p> `;
   TitlePortfolio.appendChild(TitleEdit);
 }
+
+// Affichage de la modale
+const TitleEdit = document.querySelector(".TitleEdit");
+const modal = document.querySelector(".modal");
+const ModalWrapper = document.querySelector(".modalwrapper");
+const CloseBtnModal = document.createElement("i");
+CloseBtnModal.classList.add("fa-solid", "fa-xmark", "fa-lg", "closeBtn");
+const titleModal = document.createElement("h3");
+titleModal.innerText = "Galerie Photo";
+const divGallery = document.createElement("div");
+divGallery.classList.add("GalleryModal");
+const LineModal = document.createElement("hr");
+const btnAddImg = document.createElement("button");
+btnAddImg.classList.add("BtnAddImg");
+btnAddImg.innerText = "Ajouter une photo";
+ModalWrapper.appendChild(CloseBtnModal);
+ModalWrapper.appendChild(titleModal);
+ModalWrapper.appendChild(divGallery);
+ModalWrapper.appendChild(LineModal);
+ModalWrapper.appendChild(btnAddImg);
+
+afficherimages(works);
+//fonction pour afficher les images dans la modale
+function afficherimages(works) {
+  for (const work of works) {
+    const GalleryModal = document.querySelector(".GalleryModal");
+    const project = document.createElement("project");
+    const imgproject = document.createElement("img");
+    imgproject.classList.add("imgwork");
+    imgproject.src = work.imageUrl;
+    GalleryModal.appendChild(project);
+    project.appendChild(imgproject);
+  }
+}
+// fonction pour ouvrir la modale
+const OpenModal = function (e) {
+  e.preventDefault();
+  modal.style.display = null;
+  modal.removeAttribute("aria-hidden");
+};
+
+TitleEdit.addEventListener("click", OpenModal);
