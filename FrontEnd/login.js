@@ -25,7 +25,7 @@ formLogin.addEventListener("submit", async function (event) {
       const token = data.token;
       console.log(token); //  la valeur du token dans la console
       // Stocker le token
-      localStorage.setItem("token", token);
+      window.sessionStorage.setItem("token", token);
       // Redirection vers la page d'accueil
       window.location.href = "index.html";
     }

@@ -363,7 +363,7 @@ button:focus {
 }
 
 .modalwrapper {
-  position: fixed;
+  position: sticky;
   width: 630px;
   height: 688px;
   border-radius: 10px;

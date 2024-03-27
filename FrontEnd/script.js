@@ -54,7 +54,7 @@ filterProjects(categories);
 
 // Passer au mode edition
 
-if (localStorage.getItem("token")) {
+if (window.sessionStorage.getItem("token")) {
   // modifier le text du lien login en logout
   const login = document.querySelector("#logIn");
   login.innerText = "logout";
@@ -62,7 +62,7 @@ if (localStorage.getItem("token")) {
   LogInMode();
   // fonction pour Supprimer le token et revenir vers la page de connexion
   login.addEventListener("click", function () {
-    localStorage.removeItem("token");
+    window.sessionStorage.removeItem("token");
     window.location.href = "login.html";
   });
 }
@@ -95,7 +95,7 @@ const TitleEdit = document.querySelector(".TitleEdit");
 const modal = document.querySelector(".modal");
 const ModalWrapper = document.querySelector(".modalwrapper");
 const CloseBtnModal = document.createElement("i");
-CloseBtnModal.classList.add("fa-solid", "fa-xmark", "fa-lg", "closeBtn");
+CloseBtnModal.classList.add("fa-solid", "fa-xmark", "fa-lg");
 const titleModal = document.createElement("h3");
 titleModal.innerText = "Galerie Photo";
 const divGallery = document.createElement("div");
@@ -123,11 +123,36 @@ function afficherimages(works) {
     project.appendChild(imgproject);
   }
 }
-// fonction pour ouvrir la modale
+
+// fonctions pour ouvrir et fermer la modale
+
+let modal1 = null;
 const OpenModal = function (e) {
   e.preventDefault();
+  e.stopPropagation();
   modal.style.display = null;
   modal.removeAttribute("aria-hidden");
+  modal1 = modal;
+  modal1.addEventListener("click", closeModal);
+  modal1.querySelector(".fa-xmark").addEventListener("click", closeModal);
+  modal1
+    .querySelector(".modalwrapper")
+    .addEventListener("click", stopPropagation);
 };
-
+const closeModal = function (e) {
+  if (modal1 === null) return;
+  e.preventDefault();
+  e.stopPropagation();
+  modal1.style.display = "none";
+  modal1.setAttribute("aria-hidden", "true");
+  modal1.removeEventListener("click", closeModal);
+  modal1.querySelector(".fa-xmark").removeEventListener("click", closeModal);
+  modal1
+    .querySelector(".modalwrapper")
+    .removeEventListener("click", stopPropagation);
+  modal1 = null;
+};
+const stopPropagation = function (e) {
+  e.stopPropagation();
+};
 TitleEdit.addEventListener("click", OpenModal);
