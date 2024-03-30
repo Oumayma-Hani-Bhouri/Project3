@@ -66,7 +66,6 @@ if (window.sessionStorage.getItem("token")) {
     window.location.href = "login.html";
   });
 }
-
 function LogInMode() {
   // supprimer la partie filtres
   document.querySelector(".filters").style.display = "none";
@@ -91,41 +90,48 @@ function LogInMode() {
 }
 
 // Affichage de la modale
-const TitleEdit = document.querySelector(".TitleEdit");
-const modal = document.querySelector(".modal");
-const ModalWrapper = document.querySelector(".modalwrapper");
-const CloseBtnModal = document.createElement("i");
-CloseBtnModal.classList.add("fa-solid", "fa-xmark", "fa-lg");
-const titleModal = document.createElement("h3");
-titleModal.innerText = "Galerie Photo";
-const divGallery = document.createElement("div");
-divGallery.classList.add("GalleryModal");
-const LineModal = document.createElement("hr");
-const btnAddImg = document.createElement("button");
-btnAddImg.classList.add("BtnAddImg");
-btnAddImg.innerText = "Ajouter une photo";
-ModalWrapper.appendChild(CloseBtnModal);
-ModalWrapper.appendChild(titleModal);
-ModalWrapper.appendChild(divGallery);
-ModalWrapper.appendChild(LineModal);
-ModalWrapper.appendChild(btnAddImg);
+function displayModalDeleting() {
+  const ModalWrapper = document.querySelector(".modalwrapper");
+  const CloseBtnModal = document.createElement("i");
+  CloseBtnModal.classList.add("fa-solid", "fa-xmark", "fa-xl", "btnclose1");
+  const titleModal = document.createElement("h3");
+  titleModal.innerText = "Galerie Photo";
+  const divGallery = document.createElement("div");
+  divGallery.classList.add("GalleryModal");
+  const LineModal = document.createElement("hr");
+  const btnAddImg = document.createElement("button");
+  btnAddImg.classList.add("BtnAddImg");
+  btnAddImg.innerText = "Ajouter une photo";
+  ModalWrapper.appendChild(CloseBtnModal);
+  ModalWrapper.appendChild(titleModal);
+  ModalWrapper.appendChild(divGallery);
+  ModalWrapper.appendChild(LineModal);
+  ModalWrapper.appendChild(btnAddImg);
+  displayImgModal(works);
+  btnAddImg.addEventListener("click", displayModalAdd);
+}
 
-afficherimages(works);
 //fonction pour afficher les images dans la modale
-function afficherimages(works) {
+function displayImgModal(works) {
   for (const work of works) {
     const GalleryModal = document.querySelector(".GalleryModal");
     const project = document.createElement("project");
+    project.classList.add("project");
     const imgproject = document.createElement("img");
     imgproject.classList.add("imgwork");
+    const iconTrash = document.createElement("i");
+    iconTrash.classList.add("fa-regular", "fa-trash-can", "fa-sm");
     imgproject.src = work.imageUrl;
     GalleryModal.appendChild(project);
     project.appendChild(imgproject);
+    project.appendChild(iconTrash);
   }
 }
+displayModalDeleting();
 
 // fonctions pour ouvrir et fermer la modale
 
+const modal = document.querySelector(".modal");
 let modal1 = null;
 const OpenModal = function (e) {
   e.preventDefault();
@@ -134,7 +140,8 @@ const OpenModal = function (e) {
   modal.removeAttribute("aria-hidden");
   modal1 = modal;
   modal1.addEventListener("click", closeModal);
-  modal1.querySelector(".fa-xmark").addEventListener("click", closeModal);
+  modal1.querySelector(".btnclose1").addEventListener("click", closeModal);
+
   modal1
     .querySelector(".modalwrapper")
     .addEventListener("click", stopPropagation);
@@ -146,13 +153,78 @@ const closeModal = function (e) {
   modal1.style.display = "none";
   modal1.setAttribute("aria-hidden", "true");
   modal1.removeEventListener("click", closeModal);
-  modal1.querySelector(".fa-xmark").removeEventListener("click", closeModal);
+  modal1.querySelector(".btnclose1").removeEventListener("click", closeModal);
+
   modal1
     .querySelector(".modalwrapper")
     .removeEventListener("click", stopPropagation);
+
   modal1 = null;
 };
 const stopPropagation = function (e) {
   e.stopPropagation();
 };
+
+const TitleEdit = document.querySelector(".TitleEdit");
 TitleEdit.addEventListener("click", OpenModal);
+
+// fonction pour afficher la modal d ajout
+
+function displayModalAdd() {
+  const ModalWrapper = document.querySelector(".modalwrapper");
+  ModalWrapper.innerHTML = "";
+  const iconsModal = document.createElement("div");
+  iconsModal.classList.add("iconsModal");
+  const btnBackToGallery = document.createElement("i");
+  btnBackToGallery.classList.add("fa-solid", "fa-arrow-left", "fa-xl");
+  const CloseBtnModal = document.createElement("i");
+  CloseBtnModal.classList.add("fa-solid", "fa-xmark", "fa-xl", "btnclose2");
+  iconsModal.appendChild(btnBackToGallery);
+  iconsModal.appendChild(CloseBtnModal);
+  const ModalAddTitle = document.createElement("h3");
+  ModalAddTitle.classList.add("titleModaladd");
+  ModalAddTitle.innerText = "Ajout photo";
+  const AddImg = document.createElement("div");
+  AddImg.classList.add("AddImg");
+  AddImg.innerHTML = `<div>
+  <i class="fa-regular fa-image fa-5x" style="color: #b9c5cc;"></i>
+  <button class="add-photo-button">+ Ajouter photo</button>
+  <p>jpg, png : 4mo max</p> </div>
+  `;
+  const InputModal = document.createElement("div");
+  InputModal.classList.add("InputModalAdd");
+  InputModal.innerHTML = ` <div>
+  <label for="title">Titre</label>
+  <input type="text" name="title" id="title" autocomplete="off" required>
+  <label for="category">Catégorie</label>
+	<select name="category" id="category" ></select>
+  `;
+  const LineModal = document.createElement("hr");
+  LineModal.classList.add("lineModalAdd");
+  const btnValid = document.createElement("button");
+  btnValid.classList.add("BtnValid");
+  btnValid.innerText = "Valider";
+  //  retour à la vue "Galerie Photo"
+
+  btnBackToGallery.addEventListener("click", function () {
+    ModalWrapper.innerHTML = ""; // Efface le contenu actuel de la modale
+    displayModalDeleting();
+    // Reaffiche la vue "Galerie Photo"
+    modal.querySelector(".btnclose1").addEventListener("click", closeModal);
+  });
+  CloseBtnModal.addEventListener("click", function () {
+    ModalWrapper.innerHTML = ""; // Efface le contenu actuel de la modale
+    displayModalDeleting();
+    closeModalAdd();
+  });
+  ModalWrapper.appendChild(iconsModal);
+  ModalWrapper.appendChild(ModalAddTitle);
+  ModalWrapper.appendChild(AddImg);
+  ModalWrapper.appendChild(InputModal);
+  ModalWrapper.appendChild(LineModal);
+  ModalWrapper.appendChild(btnValid);
+}
+function closeModalAdd() {
+  const modal = document.querySelector(".modal");
+  modal.style.display = "none";
+}
