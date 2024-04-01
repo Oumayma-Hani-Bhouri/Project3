@@ -13,6 +13,7 @@ function displayWorks(works) {
   for (const work of works) {
     const galleryWorks = document.querySelector(".gallery");
     const project = document.createElement("project");
+    project.setAttribute("id", "project-" + work.id);
     const imgproject = document.createElement("img");
     imgproject.src = work.imageUrl;
     const caption = document.createElement("projectcaption");
@@ -108,6 +109,7 @@ function displayModalDeleting() {
   ModalWrapper.appendChild(LineModal);
   ModalWrapper.appendChild(btnAddImg);
   displayImgModal(works);
+  //  l evenement pour ouvrir la modale d ajout de photo
   btnAddImg.addEventListener("click", displayModalAdd);
 }
 
@@ -117,14 +119,20 @@ function displayImgModal(works) {
     const GalleryModal = document.querySelector(".GalleryModal");
     const project = document.createElement("project");
     project.classList.add("project");
+    project.setAttribute("id", work.id);
     const imgproject = document.createElement("img");
     imgproject.classList.add("imgwork");
+
     const iconTrash = document.createElement("i");
     iconTrash.classList.add("fa-regular", "fa-trash-can", "fa-sm");
     imgproject.src = work.imageUrl;
     GalleryModal.appendChild(project);
     project.appendChild(imgproject);
     project.appendChild(iconTrash);
+    // evenement pour supprimer un projet
+    iconTrash.addEventListener("click", () => {
+      deleteWorks(work.id);
+    });
   }
 }
 displayModalDeleting();
@@ -164,7 +172,7 @@ const closeModal = function (e) {
 const stopPropagation = function (e) {
   e.stopPropagation();
 };
-
+// evenement pour ouvrir la modale
 const TitleEdit = document.querySelector(".TitleEdit");
 TitleEdit.addEventListener("click", OpenModal);
 
@@ -204,16 +212,16 @@ function displayModalAdd() {
   const btnValid = document.createElement("button");
   btnValid.classList.add("BtnValid");
   btnValid.innerText = "Valider";
-  //  retour à la vue "Galerie Photo"
+  // evenement pour le retour à la "Galerie Photo"
 
   btnBackToGallery.addEventListener("click", function () {
     ModalWrapper.innerHTML = ""; // Efface le contenu actuel de la modale
     displayModalDeleting();
-    // Reaffiche la vue "Galerie Photo"
+    // Retour a la  "Galerie Photo" si on ferme la modale
     modal.querySelector(".btnclose1").addEventListener("click", closeModal);
   });
   CloseBtnModal.addEventListener("click", function () {
-    ModalWrapper.innerHTML = ""; // Efface le contenu actuel de la modale
+    ModalWrapper.innerHTML = "";
     displayModalDeleting();
     closeModalAdd();
   });
@@ -227,4 +235,32 @@ function displayModalAdd() {
 function closeModalAdd() {
   const modal = document.querySelector(".modal");
   modal.style.display = "none";
+}
+// fonction pour supprimer des projets
+async function deleteWorks(Id) {
+  let token = window.sessionStorage.getItem("token");
+  console.log(Id);
+  try {
+    const deletefetch = await fetch(`http://localhost:5678/api/works/${Id}`, {
+      method: "DELETE",
+      headers: {
+        accept: "*/*",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (deletefetch.ok) {
+      console.log(deletefetch);
+      const projectToRemove = document.getElementById(Id);
+      projectToRemove.remove();
+      const projectToRemove2 = document.getElementById("project-" + Id);
+      projectToRemove2.remove();
+    } else {
+      console.error(
+        "Une erreur s'est produite lors de la suppression de l'image."
+      );
+    }
+  } catch (error) {
+    console.log("une erreur est survenue", error);
+  }
 }

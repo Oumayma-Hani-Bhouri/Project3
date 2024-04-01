@@ -359,6 +359,7 @@ button:focus {
   width: 100%;
   height: 100%;
   background-color: #0000004d;
+  z-index: 1;
 }
 
 .modalwrapper {
@@ -372,6 +373,7 @@ button:focus {
   flex-direction: column;
   width: 630px;
   height: 680px;
+  z-index: 1;
 }
 .modalwrapper .btnclose1 {
   width: 24px;
@@ -411,15 +413,12 @@ button:focus {
   cursor: pointer;
   margin-top: 48px;
   padding: 9px 49px;
-  background: #a7a7a7;
-  border: 1px solid #a7a7a7;
   color: white;
   margin-bottom: 40px;
-}
-.BtnAddImg:hover {
   background: #1d6154;
   border: #1d6154 1px solid;
 }
+
 .GalleryModal .project {
   position: relative;
 }
@@ -498,6 +497,7 @@ button:focus {
   border: #cbd6dc;
   cursor: pointer;
 }
+
 .modalwrapper .AddImg p {
   color: #444;
   text-align: center;
@@ -552,4 +552,8 @@ button:focus {
   cursor: pointer;
   margin-top: 32px;
   margin-bottom: 55px;
+}
+.modalwrapper .BtnValid:hover {
+  background: #1d6154;
+  border: #1d6154 1px solid;
 }
