@@ -467,7 +467,7 @@ button:focus {
   line-height: normal;
   margin-bottom: 30px;
 }
-.modalwrapper .AddImg div {
+.modalwrapper .AddImg form {
   width: 420px;
   height: 169px;
   display: flex;
@@ -478,15 +478,20 @@ button:focus {
   background: #e8f1f6;
   margin-bottom: 30px;
 }
+.modalwrapper .AddImg .img-preview {
+  display: none;
+  object-fit: cover;
+  height: 100%;
+}
+
 .modalwrapper .AddImg .fa-image {
   margin-top: 10px;
-  margin-bottom: 6px;
+  margin-bottom: 16px;
 }
-.modalwrapper .AddImg button {
+.modalwrapper .AddImg .photo-label {
   padding: 10px 33px;
   cursor: pointer;
   border-radius: 50px;
-  margin-bottom: 7px;
   color: #306685;
   text-align: center;
   font-family: "Work Sans";
@@ -496,6 +501,7 @@ button:focus {
   background: #cbd6dc;
   border: #cbd6dc;
   cursor: pointer;
+  margin-left: 123px;
 }
 
 .modalwrapper .AddImg p {
@@ -505,6 +511,7 @@ button:focus {
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
+  margin-bottom: 10px;
 }
 .modalwrapper .InputModalAdd div {
   display: flex;
@@ -527,9 +534,12 @@ button:focus {
   width: 420px;
   height: 51px;
   border: none;
-  color: #6c6c6c;
   cursor: pointer;
   margin-bottom: 21px;
+  color: #444;
+  font-family: "Work Sans";
+  font-size: 14px;
+  font-weight: 400;
 }
 .modalwrapper .lineModalAdd {
   width: 420px;

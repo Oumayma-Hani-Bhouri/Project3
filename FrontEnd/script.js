@@ -122,7 +122,6 @@ function displayImgModal(works) {
     project.setAttribute("id", work.id);
     const imgproject = document.createElement("img");
     imgproject.classList.add("imgwork");
-
     const iconTrash = document.createElement("i");
     iconTrash.classList.add("fa-regular", "fa-trash-can", "fa-sm");
     imgproject.src = work.imageUrl;
@@ -149,7 +148,6 @@ const OpenModal = function (e) {
   modal1 = modal;
   modal1.addEventListener("click", closeModal);
   modal1.querySelector(".btnclose1").addEventListener("click", closeModal);
-
   modal1
     .querySelector(".modalwrapper")
     .addEventListener("click", stopPropagation);
@@ -194,24 +192,31 @@ function displayModalAdd() {
   ModalAddTitle.innerText = "Ajout photo";
   const AddImg = document.createElement("div");
   AddImg.classList.add("AddImg");
-  AddImg.innerHTML = `<div>
+  AddImg.innerHTML = `
+  <form method="post" enctype="multipart/form-data">
+  <img src="" alt="image upload" class="img-preview">
   <i class="fa-regular fa-image fa-5x" style="color: #b9c5cc;"></i>
-  <button class="add-photo-button">+ Ajouter photo</button>
-  <p>jpg, png : 4mo max</p> </div>
-  `;
+  <div>
+  <label for="photo" class="photo-label">+ Ajouter photo </label>
+  <input style="opacity :0;" type="file" id="photo" name="photo" accept="image/png, image/jpeg" />
+  </div>
+  <p>jpg, png : 4mo max</p> 
+
+</form>`;
   const InputModal = document.createElement("div");
   InputModal.classList.add("InputModalAdd");
   InputModal.innerHTML = ` <div>
   <label for="title">Titre</label>
   <input type="text" name="title" id="title" autocomplete="off" required>
-  <label for="category">Catégorie</label>
-	<select name="category" id="category" ></select>
+  <label for="selectcategory">Catégorie</label>
+	<select name="selectcategory" id="selectcategory" >  <option value=""selected></option</select>
   `;
   const LineModal = document.createElement("hr");
   LineModal.classList.add("lineModalAdd");
   const btnValid = document.createElement("button");
   btnValid.classList.add("BtnValid");
   btnValid.innerText = "Valider";
+
   // evenement pour le retour à la "Galerie Photo"
 
   btnBackToGallery.addEventListener("click", function () {
@@ -231,11 +236,22 @@ function displayModalAdd() {
   ModalWrapper.appendChild(InputModal);
   ModalWrapper.appendChild(LineModal);
   ModalWrapper.appendChild(btnValid);
+  // Ajout des categories dans la modale d'ajout
+  categories.forEach((category) => {
+    const selectCategory = document.getElementById("selectcategory");
+    selectCategory.required = true;
+    const option = document.createElement("option");
+    option.value = category.id;
+    option.innerText = category.name;
+    selectCategory.appendChild(option);
+  });
 }
+//fonction pour fermer la Modale d ajout
 function closeModalAdd() {
   const modal = document.querySelector(".modal");
   modal.style.display = "none";
 }
+
 // fonction pour supprimer des projets
 async function deleteWorks(Id) {
   let token = window.sessionStorage.getItem("token");
