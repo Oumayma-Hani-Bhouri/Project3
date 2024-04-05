@@ -486,9 +486,13 @@ button:focus {
 
 .modalwrapper .AddImg .fa-image {
   margin-top: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 6px;
+}
+.modalwrapper .AddImg #photo {
+  display: none;
 }
 .modalwrapper .AddImg .photo-label {
+  display: flex;
   padding: 10px 33px;
   cursor: pointer;
   border-radius: 50px;
@@ -501,10 +505,11 @@ button:focus {
   background: #cbd6dc;
   border: #cbd6dc;
   cursor: pointer;
-  margin-left: 123px;
+  justify-content: center;
 }
 
 .modalwrapper .AddImg p {
+  display: flex;
   color: #444;
   text-align: center;
   font-family: "Work Sans";
@@ -512,6 +517,7 @@ button:focus {
   font-style: normal;
   font-weight: 400;
   margin-bottom: 10px;
+  margin-top: 7px;
 }
 .modalwrapper .InputModalAdd div {
   display: flex;

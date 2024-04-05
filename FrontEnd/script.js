@@ -154,8 +154,10 @@ const OpenModal = function (e) {
 };
 const closeModal = function (e) {
   if (modal1 === null) return;
+
   e.preventDefault();
   e.stopPropagation();
+
   modal1.style.display = "none";
   modal1.setAttribute("aria-hidden", "true");
   modal1.removeEventListener("click", closeModal);
@@ -193,14 +195,14 @@ function displayModalAdd() {
   const AddImg = document.createElement("div");
   AddImg.classList.add("AddImg");
   AddImg.innerHTML = `
-  <form method="post" enctype="multipart/form-data">
+  <form method="post"  action="/upload" id=form-add >
   <img src="" alt="image upload" class="img-preview">
   <i class="fa-regular fa-image fa-5x" style="color: #b9c5cc;"></i>
   <div>
   <label for="photo" class="photo-label">+ Ajouter photo </label>
-  <input style="opacity :0;" type="file" id="photo" name="photo" accept="image/png, image/jpeg" />
+  <input type="file" id="photo" name="photo"  />
   </div>
-  <p>jpg, png : 4mo max</p> 
+  <p class=imgtype >jpg, png : 4mo max</p> 
 
 </form>`;
   const InputModal = document.createElement("div");
@@ -209,7 +211,7 @@ function displayModalAdd() {
   <label for="title">Titre</label>
   <input type="text" name="title" id="title" autocomplete="off" required>
   <label for="selectcategory">Catégorie</label>
-	<select name="selectcategory" id="selectcategory" >  <option value=""selected></option</select>
+	<select name="selectcategory" id="selectcategory" required >  <option value=""selected></option</select>
   `;
   const LineModal = document.createElement("hr");
   LineModal.classList.add("lineModalAdd");
@@ -222,9 +224,9 @@ function displayModalAdd() {
   btnBackToGallery.addEventListener("click", function () {
     ModalWrapper.innerHTML = ""; // Efface le contenu actuel de la modale
     displayModalDeleting();
-    // Retour a la  "Galerie Photo" si on ferme la modale
-    modal.querySelector(".btnclose1").addEventListener("click", closeModal);
   });
+  // Retour a la  "Galerie Photo" si on ferme la modale
+
   CloseBtnModal.addEventListener("click", function () {
     ModalWrapper.innerHTML = "";
     displayModalDeleting();
@@ -245,11 +247,17 @@ function displayModalAdd() {
     option.innerText = category.name;
     selectCategory.appendChild(option);
   });
+
+  const inputPhoto = document.getElementById("photo");
+  inputPhoto.addEventListener("change", function () {
+    validateAndDisplayImage(inputPhoto);
+  });
 }
-//fonction pour fermer la Modale d ajout
+// fonction pour fermer la modale d ajout
 function closeModalAdd() {
   const modal = document.querySelector(".modal");
   modal.style.display = "none";
+  modal.querySelector(".btnclose1").addEventListener("click", closeModal);
 }
 
 // fonction pour supprimer des projets
@@ -279,4 +287,45 @@ async function deleteWorks(Id) {
   } catch (error) {
     console.log("une erreur est survenue", error);
   }
+}
+
+// fonction pour afficher l image dans la modale
+function validateAndDisplayImage(fileInput) {
+  const allowedTypes = ["image/jpeg", "image/png"];
+  const maxSize = 4 * 1024 * 1024; // 4 Mo
+
+  const file = fileInput.files[0];
+
+  // Vérifie si un fichier est sélectionné
+  if (!file) {
+    alert("Veuillez sélectionner une image.");
+    return;
+  }
+
+  // Vérifie le type de fichier
+  if (!allowedTypes.includes(file.type)) {
+    alert("Veuillez sélectionner une image de type JPEG ou PNG.");
+    return;
+  }
+
+  // Vérifie la taille du fichier
+  if (file.size > maxSize) {
+    alert("La taille de l'image dépasse la limite de 4 Mo.");
+    return;
+  }
+
+  // Affiche l aperçu de l image dans l input
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    const imgPreview = document.querySelector(".img-preview");
+    const iconImage = document.querySelector(".fa-image");
+    const labelInputAdd = document.querySelector(".photo-label");
+    const imgtype = document.querySelector(".imgtype");
+    iconImage.style.display = "none";
+    labelInputAdd.style.display = "none";
+    imgtype.style.display = "none";
+    imgPreview.src = event.target.result;
+    imgPreview.style.display = "flex"; // Affiche l aperçu de limage
+  };
+  reader.readAsDataURL(file);
 }
