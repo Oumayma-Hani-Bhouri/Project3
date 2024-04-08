@@ -192,10 +192,11 @@ function displayModalAdd() {
   const ModalAddTitle = document.createElement("h3");
   ModalAddTitle.classList.add("titleModaladd");
   ModalAddTitle.innerText = "Ajout photo";
-  const AddImg = document.createElement("div");
+  const AddImg = document.createElement("form");
   AddImg.classList.add("AddImg");
   AddImg.innerHTML = `
   <form method="post"  action="/upload" id=form-add >
+  <div class=addphoto>
   <img src="" alt="image upload" class="img-preview">
   <i class="fa-regular fa-image fa-5x" style="color: #b9c5cc;"></i>
   <div>
@@ -203,22 +204,17 @@ function displayModalAdd() {
   <input type="file" id="photo" name="photo"  />
   </div>
   <p class=imgtype >jpg, png : 4mo max</p> 
-
-</form>`;
-  const InputModal = document.createElement("div");
-  InputModal.classList.add("InputModalAdd");
-  InputModal.innerHTML = ` <div>
+</div>
+ <div class="titlendcategory">
   <label for="title">Titre</label>
   <input type="text" name="title" id="title" autocomplete="off" required>
   <label for="selectcategory">Catégorie</label>
-	<select name="selectcategory" id="selectcategory" required >  <option value=""selected></option</select>
-  `;
-  const LineModal = document.createElement("hr");
-  LineModal.classList.add("lineModalAdd");
-  const btnValid = document.createElement("button");
-  btnValid.classList.add("BtnValid");
-  btnValid.innerText = "Valider";
-
+	<select name="selectcategory" id="selectcategory" required >  <option value=""selected></option> </select>
+  <hr class="lineModalAdd" /> 
+      <input type="submit" value="Valider" class="BtnValid" />
+    </div>
+  </form>
+`;
   // evenement pour le retour à la "Galerie Photo"
 
   btnBackToGallery.addEventListener("click", function () {
@@ -235,9 +231,7 @@ function displayModalAdd() {
   ModalWrapper.appendChild(iconsModal);
   ModalWrapper.appendChild(ModalAddTitle);
   ModalWrapper.appendChild(AddImg);
-  ModalWrapper.appendChild(InputModal);
-  ModalWrapper.appendChild(LineModal);
-  ModalWrapper.appendChild(btnValid);
+
   // Ajout des categories dans la modale d'ajout
   categories.forEach((category) => {
     const selectCategory = document.getElementById("selectcategory");
@@ -328,4 +322,53 @@ function validateAndDisplayImage(fileInput) {
     imgPreview.style.display = "flex"; // Affiche l aperçu de limage
   };
   reader.readAsDataURL(file);
+}
+// fonction pour poster l image
+function postNewWork() {
+  const FormBtnValid = document.querySelector(".BtnValid");
+  const addphoto = document.getElementById("photo");
+  const title = document.getElementById("title");
+  const selectCategory = document.getElementById("selectcategory");
+  FormBtnValid.addEventListener("click", async (event) => {
+    event.preventDefault();
+    console.log("validation");
+    // Récupérez les données du formulaire
+    const formData = new FormData();
+    formData.append("image", addphoto.files[0]);
+    formData.append("title", title.value);
+    formData.append("category", selectCategory.value);
+    // Effectuez une requête fetch POST vers votre endpoint back-end
+    try {
+      const response = await fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        console.log("Le projet a été ajouté avec succès.");
+        // const newProject = await response.json();
+        // displayNewProject(newProject);
+      } else {
+        console.error("Erreur lors de l'ajout du projet.");
+      }
+    } catch (error) {
+      console.error("Une erreur s'est produite", error);
+    }
+  });
+}
+async function displayNewProject(newProject) {
+  const gallery = document.querySelector(".gallery");
+  const Project = document.createElement("project");
+  const imgProject = document.createElement("img");
+  const caption = document.createElement("caption");
+
+  Project.classList.add(`Project-${newProject.id}`);
+  imgProject.src = newProject.imageUrl;
+  caption.innerText = newProject.title;
+  gallery.appendChild(Project);
+  Project.appendChild(imgProject);
+  Project.appendChild(caption);
 }

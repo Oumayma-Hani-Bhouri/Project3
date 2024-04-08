@@ -467,7 +467,13 @@ button:focus {
   line-height: normal;
   margin-bottom: 30px;
 }
-.modalwrapper .AddImg form {
+.modalwrapper .AddImg #form-add {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.modalwrapper .AddImg .addphoto {
   width: 420px;
   height: 169px;
   display: flex;
@@ -476,7 +482,7 @@ button:focus {
   align-items: center;
   border-radius: 3px;
   background: #e8f1f6;
-  margin-bottom: 30px;
+  margin: 0 105px 30px 105px;
 }
 .modalwrapper .AddImg .img-preview {
   display: none;
@@ -519,12 +525,12 @@ button:focus {
   margin-bottom: 10px;
   margin-top: 7px;
 }
-.modalwrapper .InputModalAdd div {
+.modalwrapper .titlendcategory {
   display: flex;
   flex-direction: column;
   margin: 0 105px 0 105px;
 }
-.modalwrapper .InputModalAdd div label {
+.modalwrapper .titlendcategory label {
   color: #3d3d3d;
   font-family: "Work Sans";
   font-size: 14px;
@@ -533,8 +539,8 @@ button:focus {
   text-align: left;
   margin-bottom: 10px;
 }
-.modalwrapper .InputModalAdd div input,
-.modalwrapper .InputModalAdd div select {
+.modalwrapper .titlendcategory input,
+.modalwrapper .titlendcategory select {
   background: #fff;
   box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
   width: 420px;
@@ -547,13 +553,14 @@ button:focus {
   font-size: 14px;
   font-weight: 400;
 }
-.modalwrapper .lineModalAdd {
+.modalwrapper .titlendcategory hr .lineModalAdd {
   width: 420px;
   background: #b3b3b3;
   margin-top: 27px;
 }
-.modalwrapper .BtnValid {
-  padding: 9px 80px;
+.modalwrapper .titlendcategory .BtnValid {
+  width: 237px;
+  height: 36px;
   border-radius: 60px;
   background: #a7a7a7;
   font-family: "Syne";
@@ -569,7 +576,7 @@ button:focus {
   margin-top: 32px;
   margin-bottom: 55px;
 }
-.modalwrapper .BtnValid:hover {
+.modalwrapper .titlendcategory .BtnValid:hover {
   background: #1d6154;
   border: #1d6154 1px solid;
 }
