@@ -442,22 +442,35 @@ button:focus {
   z-index: 2;
   color: white;
 }
-.modalwrapper .iconsModal {
+#modal-add {
+  position: sticky;
+  border-radius: 10px;
+  background: #fff;
+  max-width: calc(100vw - 20px);
+  max-height: calc(100vh - 20px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 630px;
+  height: 680px;
+  z-index: 1;
+}
+#modal-add .iconsModal {
   display: flex;
   flex-direction: row;
   gap: 525px;
   margin-top: 30px;
   margin-bottom: 20px;
 }
-.modalwrapper .fa-arrow-left {
+#modal-add .fa-arrow-left {
   margin-left: 30px;
   cursor: pointer;
 }
-.modalwrapper .btnclose2 {
+#modal-add .btnclose2 {
   margin-right: 30px;
   cursor: pointer;
 }
-.modalwrapper .titleModaladd {
+#modal-add .titleModaladd {
   color: #000;
   text-align: center;
   font-family: "Work Sans";
@@ -467,13 +480,13 @@ button:focus {
   line-height: normal;
   margin-bottom: 30px;
 }
-.modalwrapper .AddImg #form-add {
+#modal-add .AddImgForm #form-add {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.modalwrapper .AddImg .addphoto {
+#modal-add .AddImgForm .addphoto {
   width: 420px;
   height: 169px;
   display: flex;
@@ -484,20 +497,20 @@ button:focus {
   background: #e8f1f6;
   margin: 0 105px 30px 105px;
 }
-.modalwrapper .AddImg .img-preview {
+#modal-add .AddImgForm .img-preview {
   display: none;
   object-fit: cover;
   height: 100%;
 }
 
-.modalwrapper .AddImg .fa-image {
+#modal-add .AddImgForm .fa-image {
   margin-top: 10px;
   margin-bottom: 6px;
 }
-.modalwrapper .AddImg #photo {
+#modal-add .AddImgForm #photo {
   display: none;
 }
-.modalwrapper .AddImg .photo-label {
+#modal-add .AddImgForm .photo-label {
   display: flex;
   padding: 10px 33px;
   cursor: pointer;
@@ -514,7 +527,7 @@ button:focus {
   justify-content: center;
 }
 
-.modalwrapper .AddImg p {
+#modal-add .AddImgForm p {
   display: flex;
   color: #444;
   text-align: center;
@@ -525,12 +538,12 @@ button:focus {
   margin-bottom: 10px;
   margin-top: 7px;
 }
-.modalwrapper .titlendcategory {
+#modal-add .titlendcategory {
   display: flex;
   flex-direction: column;
   margin: 0 105px 0 105px;
 }
-.modalwrapper .titlendcategory label {
+#modal-add .titlendcategory label {
   color: #3d3d3d;
   font-family: "Work Sans";
   font-size: 14px;
@@ -539,8 +552,8 @@ button:focus {
   text-align: left;
   margin-bottom: 10px;
 }
-.modalwrapper .titlendcategory input,
-.modalwrapper .titlendcategory select {
+#modal-add .titlendcategory input,
+#modal-add .titlendcategory select {
   background: #fff;
   box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
   width: 420px;
@@ -553,12 +566,12 @@ button:focus {
   font-size: 14px;
   font-weight: 400;
 }
-.modalwrapper .titlendcategory hr .lineModalAdd {
+#modal-add .titlendcategory .lineModalAdd {
   width: 420px;
   background: #b3b3b3;
   margin-top: 27px;
 }
-.modalwrapper .titlendcategory .BtnValid {
+#modal-add .titlendcategory .BtnValid {
   width: 237px;
   height: 36px;
   border-radius: 60px;
@@ -576,7 +589,7 @@ button:focus {
   margin-top: 32px;
   margin-bottom: 55px;
 }
-.modalwrapper .titlendcategory .BtnValid:hover {
+#modal-add .titlendcategory .BtnValid:hover {
   background: #1d6154;
   border: #1d6154 1px solid;
 }
