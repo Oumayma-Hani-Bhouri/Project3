@@ -307,7 +307,6 @@ function displayModalAdd() {
   submitModalAdd.classList.add("BtnValid");
 
   AddImgForm.appendChild(submitModalAdd);
-
   modal.appendChild(modalAdd);
   modalAdd.appendChild(iconsModal);
   modalAdd.appendChild(ModalAddTitle);
@@ -339,6 +338,11 @@ function displayModalAdd() {
   const inputPhoto = document.querySelector(".InputImg");
   inputPhoto.addEventListener("change", function () {
     validateAndDisplayImage(inputPhoto);
+  });
+  submitModalAdd.addEventListener("click", function (event) {
+    event.preventDefault();
+    postNewWork();
+    console.log("submit");
   });
   // Ajout des categories dans la modale d'ajout
 
@@ -393,44 +397,41 @@ function validateAndDisplayImage(fileInput) {
   };
   reader.readAsDataURL(file);
 }
+
 //fonction pour poster l image
-function postNewWork() {
-  const FormBtnValid = document.querySelector(".BtnValid");
+async function postNewWork() {
   const addphoto = document.getElementById("photo");
   const title = document.getElementById("title");
   const selectCategory = document.getElementById("selectcategory");
-  FormBtnValid.addEventListener("click", async (event) => {
-    event.preventDefault();
-    console.log("submit");
-    // Recuperez les donnees du formulaire
-    const formData = new FormData();
-    formData.append("image", addphoto.files[0]);
-    formData.append("title", title.value);
-    formData.append("category", selectCategory.value);
-    // Effectuez une requête fetch POST
-    let token = window.sessionStorage.getItem("token");
 
-    try {
-      const response = await fetch("http://localhost:5678/api/works", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          accept: "application/json",
-        },
-        body: formData,
-      });
+  // Recuperez les donnees du formulaire
+  const formData = new FormData();
+  formData.append("image", addphoto.files[0]);
+  formData.append("title", title.value);
+  formData.append("category", selectCategory.value);
+  // Effectuez une requête fetch POST
+  let token = window.sessionStorage.getItem("token");
 
-      if (response.ok) {
-        console.log("Le projet a été ajouté avec succès.");
-        const newProject = await response.json();
-        displayNewProject(newProject);
-      } else {
-        console.error("Erreur lors de l'ajout du projet.");
-      }
-    } catch (error) {
-      console.error("Une erreur s'est produite", error);
+  try {
+    const response = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        accept: "application/json",
+      },
+      body: formData,
+    });
+
+    if (response.ok) {
+      console.log("Le projet a été ajouté avec succès.");
+      const newProject = await response.json();
+      displayNewProject(newProject);
+    } else {
+      console.error("Erreur lors de l'ajout du projet.");
     }
-  });
+  } catch (error) {
+    console.error("Une erreur s'est produite", error);
+  }
 }
 
 async function displayNewProject(newProject) {
