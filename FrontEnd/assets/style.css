@@ -571,7 +571,7 @@ button:focus {
   background: #b3b3b3;
   margin-top: 27px;
 }
-#modal-add .titlendcategory .BtnValid {
+#modal-add #form-add .BtnValid {
   width: 237px;
   height: 36px;
   border-radius: 60px;
@@ -585,11 +585,7 @@ button:focus {
   font-style: normal;
   line-height: normal;
   border: #a7a7a7 1px solid;
-  cursor: pointer;
   margin-top: 32px;
   margin-bottom: 55px;
-}
-#modal-add .titlendcategory .BtnValid:hover {
-  background: #1d6154;
-  border: #1d6154 1px solid;
+  margin-left: 195px;
 }
