@@ -426,6 +426,7 @@ async function postNewWork() {
       console.log("Le projet a été ajouté avec succès.");
       const newProject = await response.json();
       displayNewProject(newProject);
+      addNewProjectinModal(newProject);
     } else {
       console.error("Erreur lors de l'ajout du projet.");
     }
@@ -436,14 +437,35 @@ async function postNewWork() {
 
 async function displayNewProject(newProject) {
   const gallery = document.querySelector(".gallery");
+  gallery.classList.add("gallery");
   const Project = document.createElement("figure");
   const imgProject = document.createElement("img");
   const caption = document.createElement("figcaption");
-
   Project.classList.add(`Project-${newProject.id}`);
   imgProject.src = newProject.imageUrl;
   caption.innerText = newProject.title;
   gallery.appendChild(Project);
   Project.appendChild(imgProject);
   Project.appendChild(caption);
+}
+async function addNewProjectinModal(newProject) {
+  // Ajout de l'image dans la galerie modal
+  const GalleryModal = document.querySelector(".GalleryModal");
+  GalleryModal.classList.add("GalleryModal");
+  const ProjectModal = document.createElement("figure");
+  ProjectModal.classList.add("project");
+  ProjectModal.setAttribute("id", newProject.id);
+  const imgProject = document.createElement("img");
+  imgProject.classList.add("imgwork");
+  const iconTrash = document.createElement("i");
+  iconTrash.classList.add("fa-regular", "fa-trash-can", "fa-sm");
+  ProjectModal.classList.add(`Project-${newProject.id}`);
+  imgProject.src = newProject.imageUrl;
+  // Suppression de l'image
+  iconTrash.addEventListener("click", () => {
+    deleteWorks(newProject.id);
+  });
+  GalleryModal.appendChild(ProjectModal);
+  ProjectModal.appendChild(imgProject);
+  ProjectModal.appendChild(iconTrash);
 }
