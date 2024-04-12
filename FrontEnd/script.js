@@ -354,6 +354,10 @@ function displayModalAdd() {
     option.innerText = category.name;
     selectCategory.appendChild(option);
   });
+  // changer la couleur du bouton en vert si les champs sont remplis
+  AddPhoto.addEventListener("change", checkFormFields);
+  title.addEventListener("input", checkFormFields);
+  selectCategory.addEventListener("change", checkFormFields);
 }
 
 // fonction pour afficher l image dans la modale
@@ -404,6 +408,13 @@ async function postNewWork() {
   const title = document.getElementById("title");
   const selectCategory = document.getElementById("selectcategory");
 
+  // Vérifier si les champs sont vides
+  if (!addphoto.files[0] || !title.value || !selectCategory.value) {
+    alert("Veuillez remplir tous les champs du formulaire.");
+
+    return;
+  }
+
   // Recuperez les donnees du formulaire
   const formData = new FormData();
   formData.append("image", addphoto.files[0]);
@@ -427,6 +438,7 @@ async function postNewWork() {
       const newProject = await response.json();
       displayNewProject(newProject);
       addNewProjectinModal(newProject);
+      clearAddImageForm();
     } else {
       console.error("Erreur lors de l'ajout du projet.");
     }
@@ -468,4 +480,45 @@ async function addNewProjectinModal(newProject) {
   GalleryModal.appendChild(ProjectModal);
   ProjectModal.appendChild(imgProject);
   ProjectModal.appendChild(iconTrash);
+}
+// Fonction pour vider les champs du formulaire d'ajout d'image
+function clearAddImageForm() {
+  // Récupérer les éléments du formulaire
+  const addphoto = document.getElementById("photo");
+  const title = document.getElementById("title");
+  const selectCategory = document.getElementById("selectcategory");
+  const imgPreview = document.querySelector(".img-preview");
+  const iconImage = document.querySelector(".fa-image");
+  const labelInputAdd = document.querySelector(".photo-label");
+  const imgtype = document.querySelector(".imgtype");
+  iconImage.style.display = "flex";
+  labelInputAdd.style.display = "flex";
+  imgtype.style.display = "flex";
+  imgPreview.style.display = "none";
+  // Vider les valeurs des champs
+  addphoto.value = "";
+  title.value = "";
+  selectCategory.selectedIndex = 0; // Réinitialiser la sélection de la catégorie
+}
+// Fonction pour vérifier si tous les champs du formulaire sont remplis
+function checkFormFields() {
+  const addphoto = document.getElementById("photo");
+  const title = document.getElementById("title");
+  const selectCategory = document.getElementById("selectcategory");
+
+  const submitModalAdd = document.querySelector(".BtnValid");
+
+  // Modifier la couleur du bouton en fonction de letat
+  if (
+    !addphoto.files[0] ||
+    title.value.trim() === "" ||
+    selectCategory.value === ""
+  ) {
+    submitModalAdd.style.backgroundColor = "";
+    submitModalAdd.style.cursor = "not-allowed";
+  } else {
+    submitModalAdd.style.backgroundColor = "#1D6154";
+    submitModalAdd.disabled = false;
+    submitModalAdd.style.cursor = "pointer";
+  }
 }
