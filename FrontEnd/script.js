@@ -302,7 +302,6 @@ function displayModalAdd() {
   lineModalAdd.classList.add("lineModalAdd");
   titlendcategory.appendChild(lineModalAdd);
   const submitModalAdd = document.createElement("button");
-
   submitModalAdd.innerText = "Valider";
   submitModalAdd.classList.add("BtnValid");
 
@@ -317,7 +316,12 @@ function displayModalAdd() {
     e.stopPropagation();
   };
   modalAdd.addEventListener("click", stopPropagation);
-
+  // evenement pour fermer la modale dajout et revenir a la modale 1 si on clique dehors
+  modal.addEventListener("click", function () {
+    modal.removeChild(modalAdd);
+    ModalWrapper.style.display = "flex";
+    modal.style.display = "none";
+  });
   // evenement pour le retour à la "Galerie Photo"
 
   btnBackToGallery.addEventListener("click", function () {
@@ -326,7 +330,7 @@ function displayModalAdd() {
     ModalWrapper.style.display = "flex";
     modal.style.display = "flex";
   });
-  // Retour a la  "Galerie Photo"
+  // fermer la modale d ajout
 
   CloseBtnModal.addEventListener("click", function () {
     modal.removeChild(modalAdd);
@@ -447,7 +451,7 @@ async function postNewWork() {
   }
 }
 
-async function displayNewProject(newProject) {
+async function addNewProjectinGallery(newProject) {
   const gallery = document.querySelector(".gallery");
   gallery.classList.add("gallery");
   const Project = document.createElement("figure");

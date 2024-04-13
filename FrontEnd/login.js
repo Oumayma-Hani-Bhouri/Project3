@@ -32,7 +32,7 @@ formLogin.addEventListener("submit", async function (event) {
     // Affichage d'un message d'erreur
     else {
       const ErrorMsg = document.querySelector(".error-msg");
-      ErrorMsg.textContent = "Erreur dans l’identifiant ou le mot de passe";
+      ErrorMsg.textContent = "Erreur dans l'identifiant ou le mot de passe";
     }
     document.querySelector("#email").value = null;
     document.querySelector("#password").value = null;
