@@ -343,11 +343,7 @@ function displayModalAdd() {
   inputPhoto.addEventListener("change", function () {
     validateAndDisplayImage(inputPhoto);
   });
-  submitModalAdd.addEventListener("click", function (event) {
-    event.preventDefault();
-    postNewWork();
-    console.log("submit");
-  });
+
   // Ajout des categories dans la modale d'ajout
 
   categories.forEach((category) => {
@@ -360,8 +356,14 @@ function displayModalAdd() {
   });
   // changer la couleur du bouton en vert si les champs sont remplis
   AddPhoto.addEventListener("change", checkFormFields);
-  title.addEventListener("input", checkFormFields);
+  inputTitle.addEventListener("input", checkFormFields);
   selectCategory.addEventListener("change", checkFormFields);
+
+  submitModalAdd.addEventListener("click", function (event) {
+    event.preventDefault();
+    postNewWork();
+    console.log("submit");
+  });
 }
 
 // fonction pour afficher l image dans la modale
@@ -440,7 +442,7 @@ async function postNewWork() {
     if (response.ok) {
       console.log("Le projet a été ajouté avec succès.");
       const newProject = await response.json();
-      displayNewProject(newProject);
+      addNewProjectinGallery(newProject);
       addNewProjectinModal(newProject);
       clearAddImageForm();
     } else {
