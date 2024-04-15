@@ -26,18 +26,20 @@ function displayWorks(works) {
 displayWorks(works);
 
 // le filtre Tous
+const galleryWorks = document.querySelector(".gallery");
 const buttonfilterAll = document.createElement("button");
 buttonfilterAll.innerText = "Tous";
 const filters = document.querySelector(".filters");
 filters.appendChild(buttonfilterAll);
 buttonfilterAll.addEventListener("click", function () {
-  document.querySelector(".gallery").innerHTML = "";
+  galleryWorks.innerHTML = "";
   displayWorks(works);
 });
 // creation et activation des filtres
 
 function filterProjects(categories) {
   for (const category of categories) {
+    const galleryWorks = document.querySelector(".gallery");
     const buttonfilter = document.createElement("button");
     buttonfilter.innerText = category.name;
     const filters = document.querySelector(".filters");
@@ -46,7 +48,7 @@ function filterProjects(categories) {
       const filteredProjects = works.filter(function (work) {
         return work.categoryId === category.id;
       });
-      document.querySelector(".gallery").innerHTML = "";
+      galleryWorks.innerHTML = "";
       displayWorks(filteredProjects);
     });
   }
@@ -60,6 +62,7 @@ if (window.sessionStorage.getItem("token")) {
   const login = document.querySelector("#logIn");
   login.innerText = "logout";
   console.log("Vous êtes connecté !");
+
   LogInMode();
 
   // fonction pour Supprimer le token et revenir vers la page de connexion
@@ -183,10 +186,11 @@ const closeModal = function (e) {
 const stopPropagation = function (e) {
   e.stopPropagation();
 };
-// evenement pour ouvrir la modale
-const TitleEdit = document.querySelector(".TitleEdit");
-TitleEdit.addEventListener("click", OpenModal);
 
+if (window.sessionStorage.getItem("token")) {
+  const TitleEdit = document.querySelector(".TitleEdit");
+  TitleEdit.addEventListener("click", OpenModal);
+}
 // fonction pour supprimer des projets
 async function deleteWorks(Id) {
   let token = window.sessionStorage.getItem("token");
@@ -317,8 +321,11 @@ function displayModalAdd() {
   };
   modalAdd.addEventListener("click", stopPropagation);
   // evenement pour fermer la modale dajout et revenir a la modale 1 si on clique dehors
+
   modal.addEventListener("click", function () {
-    modal.removeChild(modalAdd);
+    if (modal.contains(modalAdd)) {
+      modal.removeChild(modalAdd);
+    }
     ModalWrapper.style.display = "flex";
     modal.style.display = "none";
   });
@@ -452,7 +459,7 @@ async function postNewWork() {
     console.error("Une erreur s'est produite", error);
   }
 }
-
+// fonction pour ajouter l image dans la page d accueil
 async function addNewProjectinGallery(newProject) {
   const gallery = document.querySelector(".gallery");
   gallery.classList.add("gallery");
@@ -514,7 +521,7 @@ function checkFormFields() {
 
   const submitModalAdd = document.querySelector(".BtnValid");
 
-  // Modifier la couleur du bouton en fonction de letat
+  // Modifier la couleur du bouton en fonction de l etat
   if (
     !addphoto.files[0] ||
     title.value.trim() === "" ||
