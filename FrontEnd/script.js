@@ -32,7 +32,7 @@ buttonfilterAll.innerText = "Tous";
 const filters = document.querySelector(".filters");
 filters.appendChild(buttonfilterAll);
 buttonfilterAll.addEventListener("click", function () {
-  galleryWorks.innerHTML = "";
+  galleryWorks.innerText = "";
   displayWorks(works);
 });
 // creation et activation des filtres
@@ -48,7 +48,7 @@ function filterProjects(categories) {
       const filteredProjects = works.filter(function (work) {
         return work.categoryId === category.id;
       });
-      galleryWorks.innerHTML = "";
+      galleryWorks.innerText = "";
       displayWorks(filteredProjects);
     });
   }
