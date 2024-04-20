@@ -32,7 +32,7 @@ buttonfilterAll.innerText = "Tous";
 const filters = document.querySelector(".filters");
 filters.appendChild(buttonfilterAll);
 buttonfilterAll.addEventListener("click", function () {
-  galleryWorks.innerText = "";
+  galleryWorks.textContent = "";
   displayWorks(works);
 });
 // creation et activation des filtres
@@ -48,7 +48,7 @@ function filterProjects(categories) {
       const filteredProjects = works.filter(function (work) {
         return work.categoryId === category.id;
       });
-      galleryWorks.innerText = "";
+      galleryWorks.textContent = "";
       displayWorks(filteredProjects);
     });
   }
@@ -176,7 +176,6 @@ const closeModal = function (e) {
   modal1.setAttribute("aria-hidden", "true");
   modal1.removeEventListener("click", closeModal);
   modal1.querySelector(".btnclose1").removeEventListener("click", closeModal);
-
   modal1
     .querySelector(".modalwrapper")
     .removeEventListener("click", stopPropagation);
@@ -421,7 +420,7 @@ async function postNewWork() {
   const title = document.getElementById("title");
   const selectCategory = document.getElementById("selectcategory");
 
-  // Vérifier si les champs sont vides
+  // Verifier si les champs sont vides
   if (!addphoto.files[0] || !title.value || !selectCategory.value) {
     alert("Veuillez remplir tous les champs du formulaire.");
 
@@ -433,7 +432,7 @@ async function postNewWork() {
   formData.append("image", addphoto.files[0]);
   formData.append("title", title.value);
   formData.append("category", selectCategory.value);
-  // Effectuez une requête fetch POST
+  // Effectuez une requete fetch POST
   let token = window.sessionStorage.getItem("token");
 
   try {
@@ -474,7 +473,7 @@ async function addNewProjectinGallery(newProject) {
   Project.appendChild(caption);
 }
 async function addNewProjectinModal(newProject) {
-  // Ajout de l'image dans la galerie modal
+  // Ajout de l image dans la galerie modal
   const GalleryModal = document.querySelector(".GalleryModal");
   GalleryModal.classList.add("GalleryModal");
   const ProjectModal = document.createElement("figure");
@@ -486,7 +485,7 @@ async function addNewProjectinModal(newProject) {
   iconTrash.classList.add("fa-regular", "fa-trash-can", "fa-sm");
   ProjectModal.classList.add(`Project-${newProject.id}`);
   imgProject.src = newProject.imageUrl;
-  // Suppression de l'image
+  // Suppression de l image
   iconTrash.addEventListener("click", () => {
     deleteWorks(newProject.id);
   });
@@ -494,9 +493,9 @@ async function addNewProjectinModal(newProject) {
   ProjectModal.appendChild(imgProject);
   ProjectModal.appendChild(iconTrash);
 }
-// Fonction pour vider les champs du formulaire d'ajout d'image
+// Fonction pour vider les champs du formulaire d ajout d image
 function clearAddImageForm() {
-  // Récupérer les éléments du formulaire
+  // Recuperer les elements du formulaire
   const addphoto = document.getElementById("photo");
   const title = document.getElementById("title");
   const selectCategory = document.getElementById("selectcategory");
@@ -511,14 +510,13 @@ function clearAddImageForm() {
   // Vider les valeurs des champs
   addphoto.value = "";
   title.value = "";
-  selectCategory.selectedIndex = 0; // Réinitialiser la sélection de la catégorie
+  selectCategory.selectedIndex = 0; // Reinitialiser la selection de la categorie
 }
-// Fonction pour vérifier si tous les champs du formulaire sont remplis
+// Fonction pour verifier si tous les champs du formulaire sont remplis
 function checkFormFields() {
   const addphoto = document.getElementById("photo");
   const title = document.getElementById("title");
   const selectCategory = document.getElementById("selectcategory");
-
   const submitModalAdd = document.querySelector(".BtnValid");
 
   // Modifier la couleur du bouton en fonction de l etat
