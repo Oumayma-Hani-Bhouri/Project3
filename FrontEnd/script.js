@@ -61,8 +61,6 @@ if (window.sessionStorage.getItem("token")) {
   // modifier le text du lien login en logout
   const login = document.querySelector("#logIn");
   login.innerText = "logout";
-  console.log("Vous êtes connecté !");
-
   LogInMode();
 
   // fonction pour Supprimer le token et revenir vers la page de connexion
@@ -193,7 +191,6 @@ if (window.sessionStorage.getItem("token")) {
 // fonction pour supprimer des projets
 async function deleteWorks(Id) {
   let token = window.sessionStorage.getItem("token");
-  console.log(Id);
   try {
     const deletefetch = await fetch(`http://localhost:5678/api/works/${Id}`, {
       method: "DELETE",
@@ -204,7 +201,6 @@ async function deleteWorks(Id) {
     });
 
     if (deletefetch.ok) {
-      console.log(deletefetch);
       const projectToRemove = document.getElementById(Id);
       projectToRemove.remove();
       const projectToRemove2 = document.getElementById("project-" + Id);
@@ -214,9 +210,7 @@ async function deleteWorks(Id) {
         "Une erreur s'est produite lors de la suppression de l'image."
       );
     }
-  } catch (error) {
-    console.log("une erreur est survenue", error);
-  }
+  } catch (error) {}
 }
 
 // fonction pour afficher la modal d ajout
@@ -368,7 +362,6 @@ function displayModalAdd() {
   submitModalAdd.addEventListener("click", function (event) {
     event.preventDefault();
     postNewWork();
-    console.log("submit");
   });
 }
 
@@ -446,17 +439,13 @@ async function postNewWork() {
     });
 
     if (response.ok) {
-      console.log("Le projet a été ajouté avec succès.");
       const newProject = await response.json();
       addNewProjectinGallery(newProject);
       addNewProjectinModal(newProject);
       clearAddImageForm();
     } else {
-      console.error("Erreur lors de l'ajout du projet.");
     }
-  } catch (error) {
-    console.error("Une erreur s'est produite", error);
-  }
+  } catch (error) {}
 }
 // fonction pour ajouter l image dans la page d accueil
 async function addNewProjectinGallery(newProject) {

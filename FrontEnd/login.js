@@ -17,13 +17,11 @@ formLogin.addEventListener("submit", async function (event) {
       },
       body: chargeUtile,
     });
-    console.log(response);
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
+
       const token = data.token;
-      console.log(token); //  la valeur du token dans la console
       // Stocker le token
       window.sessionStorage.setItem("token", token);
       // Redirection vers la page d'accueil
